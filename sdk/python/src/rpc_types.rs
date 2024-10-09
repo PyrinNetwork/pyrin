@@ -197,7 +197,6 @@ pub fn grpc_py_rpc_block_type(block_dict : &PyDict) -> PyResult<protowire::RpcBl
     pub fn py_rpc_transaction_type(transaction: &PyAny) -> PyResult<protowire::RpcTransaction> {
         let transaction_dict = transaction.downcast::<PyDict>()?;
         let parent = Some("transactions");
-        println!("py_rpc_transaction_type 1");
         let inputs = RpcCore::get_dict_item(transaction_dict, "inputs").downcast::<PyList>()?;
         let inputs = inputs.iter().map(|input| {
             let parent = Some("transactions.inputs");
@@ -218,11 +217,9 @@ pub fn grpc_py_rpc_block_type(block_dict : &PyDict) -> PyResult<protowire::RpcBl
                 verbose_data: None, // TODO: tx.get_item("verbose_data")?,
             })
         }).collect::<PyResult<Vec<protowire::RpcTransactionInput>>>()?;
-        println!("py_rpc_transaction_type 2");
 
         let outputs = RpcCore::get_dict_item(transaction_dict, "outputs").downcast::<PyList>()?;
         let outputs = outputs.iter().map(|output| {
-            println!("py_rpc_transaction_type 2.1");
             let parent = Some("transactions.outputs");
             let output = output.downcast::<PyDict>()?;
             // let script_public_key = get_dict_item!(output, "script_public_key", parent).downcast::<PyDict>()?;
@@ -245,8 +242,6 @@ pub fn grpc_py_rpc_block_type(block_dict : &PyDict) -> PyResult<protowire::RpcBl
                 }
             )
         }).collect::<PyResult<Vec<protowire::RpcTransactionOutput>>>()?;
-
-        println!("py_rpc_transaction_type 3");
 
         Ok(
             protowire::RpcTransaction {
@@ -286,30 +281,4 @@ pub fn grpc_py_rpc_block_type(block_dict : &PyDict) -> PyResult<protowire::RpcBl
             verbose_data: None,
         }
     )
-
-    // TEST END
-
-    // TODO: Cause of the bug with replay on wrong hash requested in p2p ?
-    // Ok(
-    //     RpcBlock {
-    //         header: Header {
-    //             hash: get_dict_item_as_hash!(header, "hash", parent)?,
-    //             version: get_dict_item!(header, "version", parent).extract::<u16>()?,
-    //             parents_by_level: get_dict_item_as_vec_vec_hash!(header, "parents_by_level", parent),
-    //             hash_merkle_root: get_dict_item_as_hash!(header, "hash_merkle_root", parent)?,
-    //             accepted_id_merkle_root: get_dict_item_as_hash!(header, "accepted_id_merkle_root", parent)?,
-    //             utxo_commitment: get_dict_item_as_blake2_hash!(header, "utxo_commitment", parent)?,
-    //             timestamp: get_dict_item!(header, "timestamp", parent).extract::<u64>()?,
-    //             bits: get_dict_item!(header, "bits", parent).extract::<u32>()?,
-    //             nonce: get_dict_item!(header, "nonce", parent).extract::<u64>()?,
-    //             daa_score: get_dict_item!(header, "daa_score", parent).extract::<u64>()?,
-    //             blue_work: get_dict_item_as_string!(header, "blue_work", parent, BlueWorkType::from_hex, "Invalid blue work")?,
-    //             blue_score: get_dict_item!(header, "blue_score", parent).extract::<u64>()?,
-    //             pruning_point: get_dict_item_as_hash!(header, "pruning_point", parent)?,
-    //         },
-    //         transactions: transactions.iter().map(|tx| py_rpc_transaction_type(tx)).collect::<PyResult<Vec<RpcTransaction>>>()?,
-    //         // verbose_data: block_dict.get_item("verbose_data")??,
-    //         verbose_data: None,
-    //     }
-    // )
 }

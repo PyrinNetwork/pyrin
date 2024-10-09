@@ -92,7 +92,7 @@ pub struct Params {
     pub max_block_level: BlockLevel,
     pub pruning_proof_m: u64,
 
-    pub hf_relaunch_daa_score: u64,
+    pub hf_daa_score: u64,
 }
 
 fn unix_now() -> u64 {
@@ -351,7 +351,7 @@ pub const MAINNET_PARAMS: Params = Params {
     max_block_level: 225,
     pruning_proof_m: 1000,
 
-    hf_relaunch_daa_score: 27_037_930, // Hardfork at GMT Thursday, September 12, 2024 8:00:00 PM
+    hf_daa_score: 0,
 };
 
 pub const TESTNET_PARAMS: Params = Params {
@@ -410,7 +410,7 @@ pub const TESTNET_PARAMS: Params = Params {
     max_block_level: 250,
     pruning_proof_m: Bps::<10>::pruning_proof_m(),
 
-    hf_relaunch_daa_score: u64::MAX,
+    hf_daa_score: u64::MAX,
 };
 
 pub const TESTNET11_PARAMS: Params = Params {
@@ -464,7 +464,7 @@ pub const TESTNET11_PARAMS: Params = Params {
     skip_proof_of_work: false,
     max_block_level: 250,
 
-    hf_relaunch_daa_score: u64::MAX,
+    hf_daa_score: u64::MAX,
 };
 
 pub const SIMNET_PARAMS: Params = Params {
@@ -518,7 +518,7 @@ pub const SIMNET_PARAMS: Params = Params {
     skip_proof_of_work: true, // For simnet only, PoW can be simulated by default
     max_block_level: 250,
 
-    hf_relaunch_daa_score: u64::MAX,
+    hf_daa_score: u64::MAX,
 };
 
 pub const DEVNET_PARAMS: Params = Params {
@@ -576,5 +576,5 @@ pub const DEVNET_PARAMS: Params = Params {
     max_block_level: 250,
     pruning_proof_m: 1000,
 
-    hf_relaunch_daa_score: u64::MAX,
+    hf_daa_score: u64::MAX,
 };

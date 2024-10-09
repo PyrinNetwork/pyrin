@@ -39,7 +39,7 @@ pub struct CoinbaseManager {
     /// Precomputed subsidy by month table
     subsidy_by_month_table: SubsidyByMonthTable,
 
-    hf_relaunch_daa_score: u64,
+    hf_daa_score: u64,
 }
 
 /// Struct used to streamline payload parsing
@@ -67,7 +67,7 @@ impl CoinbaseManager {
         deflationary_phase_daa_score: u64,
         pre_deflationary_phase_base_subsidy: u64,
         target_time_per_block: u64,
-        hf_relaunch_daa_score: u64,
+        hf_daa_score: u64,
     ) -> Self {
         assert!(1000 % target_time_per_block == 0);
         let bps = 1000 / target_time_per_block;
@@ -85,7 +85,7 @@ impl CoinbaseManager {
             target_time_per_block,
             blocks_per_month,
             subsidy_by_month_table,
-            hf_relaunch_daa_score,
+            hf_daa_score,
         }
     }
 
@@ -487,7 +487,7 @@ mod tests {
             params.deflationary_phase_daa_score,
             params.pre_deflationary_phase_base_subsidy,
             params.target_time_per_block,
-            params.hf_relaunch_daa_score,
+            params.hf_daa_score,
         )
     }
 
